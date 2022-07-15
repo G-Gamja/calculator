@@ -3,12 +3,20 @@ export let text : string;
 // 애로우펑션
 export let onClick : (value: string)=> void;
 export let color: 'orange'| 'grey'| 'dark-grey';
+export let size: 'small'| 'big';
 </script>
-<div class="button" data-color={color} on:click={()=> onClick(text)}>{text}</div>
+<div class="button" data-size={size}
+data-color={color} on:click={()=> onClick(text)}>{text}</div>
 <style lang="scss">
  .button{
-    width: 80px;
-    height: 80px;
+    &[data-size='small']{
+        width: 80px;
+        height: 80px;
+    }
+    &[data-size='big']{
+        width: 160px;
+        height: 80px;
+    }
     display: flex;
     flex-wrap: wrap;
     align-items: center;
