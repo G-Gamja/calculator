@@ -7,6 +7,15 @@
 	const initialize: string[] = ["A/C"]
 	const ma: string[] = ["A/C"]
 
+// 이벤트 감지
+let m = { x: 0, y: 0 };
+
+function handleMousemove(event) {
+    m.x = event.clientX;
+    m.y = event.clientY;
+  }
+//이벤트 감지
+
 	let name = "world";
   function assign() {
     name = "test";
@@ -28,9 +37,30 @@ let count = 0;
     count += 1;
   }
 
-
-
+//체크박스&데이터바인딩
+let yes = true;
 </script>
+<label>
+	<input type="checkbox" bind:checked="{yes}">
+	Yes! Send me regular email spam
+  </label>
+  
+  {#if yes}
+	<p>Thank you. We will bombard your inbox and sell your personal details.</p>
+  {:else}
+	<p>You must opt in to continue. If you're not paying, you're the product.</p>
+  {/if}
+  
+  <button disabled="{!yes}">
+	Subscribe
+  </button>
+<div on:click|once={handleMousemove}>
+	The mouse position is {m.x} x {m.y}
+  </div>
+  <!-- 인라인으로 핸들러 구현 -->
+  <!-- <div on:mousemove="{e => m = { x: e.clientX, y: e.clientY }}">
+	The mouse position is {m.x} x {m.y}
+  </div> -->
 <button on:click={assign}>assign</button>
 <button on:click="{handleClick}">
 	Clicked {count} {count === 1 ? 'time' : 'times'}
