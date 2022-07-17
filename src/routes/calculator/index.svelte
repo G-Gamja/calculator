@@ -1,70 +1,89 @@
 <script lang="ts">
 	import { Button } from '@src/components/button';
 	import { each, text } from 'svelte/internal';
+	//할당 자체가 새로 이뤄져야 화면이 갱신
 	let v: string = 'sihㅌㅊㅋㅌun';
 	const s: number = 10;
 	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-	const initialize: string[] = ["A/C"]
-	const ma: string[] = ["A/C"]
+	const initialize: string[] = ['A/C'];
+	const operator: string[] = ['+', '-', '*','/','='];
+	function calculate(n1: string, operator: string, n2: string) {
+		let result = 0;
+		if (operator === '+') {
+			result = Number(n1) + Number(n2); // '+'버튼을 눌렀을 때
+		} else if (operator === '-') {
+			result = Number(n1) - Number(n2); // '-'버튼을 눌렀을 때
+		} else if (operator === '*') {
+			result = Number(n1) * Number(n2); // '*'버튼을 눌렀을 때
+		}
+		if (operator === '/') {
+			result = Number(n1) / Number(n2); // '/'버튼을 눌렀을 때
+		}
+		return String(result);
+	}
+	let operatorOn: boolean = false;
+	let n1: string;
+	let n2: string;
+	let inputOperator: string;
 
-// 이벤트 감지
-let m = { x: 0, y: 0 };
+	// 이벤트 감지
+	let m = { x: 0, y: 0 };
 
-function handleMousemove(event) {
-    m.x = event.clientX;
-    m.y = event.clientY;
-  }
-//이벤트 감지
+	function handleMousemove(event) {
+		m.x = event.clientX;
+		m.y = event.clientY;
+	}
+	//이벤트 감지
 
-	let name = "world";
-  function assign() {
-    name = "test";
-  }
+	let name = 'world';
+	function assign() {
+		name = 'test';
+	}
 
+	//   $문법 쓰는법
+	// 특정 변수가 변경됐을때 특정 함수를 실행하고 싶으시면
+	// $:data, func(); 쓰시면 됩니다.
+	let count = 0;
 
+	$: if (count >= 10) {
+		alert(`count is dangerously high!`);
+		count = 9;
+	}
 
-//   $문법 쓰는법
-// 특정 변수가 변경됐을때 특정 함수를 실행하고 싶으시면
-// $:data, func(); 쓰시면 됩니다.
-let count = 0;
+	function handleClick() {
+		count += 1;
+	}
 
-  $: if (count >= 10) {
-    alert(`count is dangerously high!`);
-    count = 9;
-  }
-
-  function handleClick() {
-    count += 1;
-  }
-
-//체크박스&데이터바인딩
-let yes = true;
+	//체크박스&데이터바인딩
+	let yes = true;
 </script>
+
 <label>
-	<input type="checkbox" bind:checked="{yes}">
+	<input type="checkbox" bind:checked={yes} />
 	Yes! Send me regular email spam
-  </label>
-  
-  {#if yes}
+</label>
+
+{#if yes}
 	<p>Thank you. We will bombard your inbox and sell your personal details.</p>
-  {:else}
+{:else}
 	<p>You must opt in to continue. If you're not paying, you're the product.</p>
-  {/if}
-  
-  <button disabled="{!yes}">
-	Subscribe
-  </button>
+{/if}
+
+<button disabled={!yes}> Subscribe </button>
 <div on:click|once={handleMousemove}>
 	The mouse position is {m.x} x {m.y}
-  </div>
-  <!-- 인라인으로 핸들러 구현 -->
-  <!-- <div on:mousemove="{e => m = { x: e.clientX, y: e.clientY }}">
+</div>
+<!-- 인라인으로 핸들러 구현 -->
+<!-- <div on:mousemove="{e => m = { x: e.clientX, y: e.clientY }}">
 	The mouse position is {m.x} x {m.y}
   </div> -->
 <button on:click={assign}>assign</button>
-<button on:click="{handleClick}">
-	Clicked {count} {count === 1 ? 'time' : 'times'}
-  </button>
+<button on:click={handleClick}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+</button>
+
+
 <div class="result">{v}</div>
 <div>
 	{#each initialize as text}
@@ -75,7 +94,6 @@ let yes = true;
 			onClick={(value) => {
 				v = '';
 			}}
-			
 		/>
 	{/each}
 </div>
@@ -87,12 +105,34 @@ let yes = true;
 				size="small"
 				color="grey"
 				onClick={(value) => {
-					v = value;
+					if(!operatorOn){
+						n1.concat(value);
+					}else{
+						n2.concat(value);
+					}
+					
 				}}
 			/>
 		{/each}
 	</div>
-	
+	<div class="frame">
+		{#each operator as text}
+			<Button
+				{text}
+				size="small"
+				color="orange"
+				onClick={(value) => {
+					if(value == '='){
+						calculate(n1,inputOperator,n2);
+					}
+					inputOperator = value;
+					operatorOn = true;
+					console.log(inputOperator);
+					
+				}}
+			/>
+		{/each}
+	</div>
 </div>
 
 <style lang="scss">
