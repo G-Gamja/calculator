@@ -14,7 +14,7 @@ data-color={color} on:click={()=> onClick(text)}>{text}</div>
         height: 80px;
     }
     &[data-size='big']{
-        width: 160px;
+        width: 320px;
         height: 80px;
     }
     display: flex;

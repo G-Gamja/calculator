@@ -2,11 +2,11 @@
 	import { Button } from '@src/components/button';
 	import { each, text } from 'svelte/internal';
 	//할당 자체가 새로 이뤄져야 화면이 갱신
-	let v: string = 'sihㅌㅊㅋㅌun';
+	let resultVal: string = '0';
 	const s: number = 10;
-	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0','.'];
 	const initialize: string[] = ['A/C'];
-	const operator: string[] = ['+', '-', '*','/','='];
+	const operator: string[] = ['+', '-', '*', '/', '='];
 	function calculate(n1: string, operator: string, n2: string) {
 		let result = 0;
 		if (operator === '+') {
@@ -21,9 +21,11 @@
 		}
 		return String(result);
 	}
+
 	let operatorOn: boolean = false;
-	let n1: string;
-	let n2: string;
+	let n1: string = '';
+	let n2: string = '';
+	let nowInput: string = '';
 	let inputOperator: string;
 
 	// 이벤트 감지
@@ -82,17 +84,31 @@
 	Clicked {count}
 	{count === 1 ? 'time' : 'times'}
 </button>
+<div class="resultContainer">
+	<div class="result">
+		<p>
+			{nowInput}
+		</p>
+		<!-- <div class="resultValue">{resultVal} </div> -->
+		
+		<!-- {operatorOn} {n1} {n2} {inputOperator} -->
+	</div>
+</div>
 
 
-<div class="result">{v}</div>
-<div>
+<div class="back_container">
 	{#each initialize as text}
 		<Button
 			{text}
 			size="big"
 			color="orange"
-			onClick={(value) => {
-				v = '';
+			onClick={() => {
+				resultVal = '0';
+				n1 = '';
+				n2 = '';
+				inputOperator = ''
+				operatorOn = false;
+				nowInput = '';
 			}}
 		/>
 	{/each}
@@ -105,30 +121,40 @@
 				size="small"
 				color="grey"
 				onClick={(value) => {
-					if(!operatorOn){
-						n1.concat(value);
-					}else{
-						n2.concat(value);
+					console.log(operatorOn);
+					if (operatorOn == false) {
+						n1 = n1.concat(value);
+						nowInput = n1;
+					} else {
+						n2 = n2.concat(value);
+						nowInput = n2;
 					}
-					
 				}}
 			/>
 		{/each}
 	</div>
-	<div class="frame">
+	<div class="frame2">
 		{#each operator as text}
 			<Button
 				{text}
 				size="small"
 				color="orange"
 				onClick={(value) => {
-					if(value == '='){
-						calculate(n1,inputOperator,n2);
-					}
+					if (value == '=') {
+						if(resultVal != '0'){
+							resultVal = calculate(resultVal, inputOperator, n2);
+							nowInput = resultVal;
+						}else {
+							resultVal = calculate(n1, inputOperator, n2);
+							nowInput = resultVal;
+						}
+						
+						n2 = ''
+					}else{
 					inputOperator = value;
 					operatorOn = true;
-					console.log(inputOperator);
-					
+					nowInput = value;
+					}
 				}}
 			/>
 		{/each}
@@ -138,18 +164,42 @@
 <style lang="scss">
 	.frame {
 		// height: 500px;
-		width: 320px;
+		width: 240px;
 		display: flex;
 		flex-direction: center;
 		align-content: center;
 		flex-wrap: wrap;
 	}
+	.frame2 {
+		// height: 500px;
+		width: 240px;
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		flex-wrap: nowrap;
+	}
 	.back_container {
-		background-color: aqua;
+	
 		width: 100%;
 		height: 100%;
 		display: flex;
-		flex-direction: center;
+	//	justify-content: center;
 		align-content: center;
 	}
+	.result{
+		width: 320px;
+		height: 80px;
+		background-color: aqua;
+		display: flex;
+	flex-direction: center;
+	 justify-content: center;
+	 align-items: center;
+	 font-size: 45px;
+	}
+	.resultContainer{
+		display: flex;
+	flex-direction: center;
+	//justify-content: center;
+	}
+	
 </style>
