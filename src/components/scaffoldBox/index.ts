@@ -1,0 +1,1 @@
+export {default as ScaffoldBox} from './index.svelte';

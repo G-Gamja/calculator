@@ -1,0 +1,1 @@
+export {default as OvalButton} from './index.svelte';
