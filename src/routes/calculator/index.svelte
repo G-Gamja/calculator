@@ -4,7 +4,7 @@
 	//할당 자체가 새로 이뤄져야 화면이 갱신
 	let resultVal: string = '0';
 	const s: number = 10;
-	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0','.'];
+	const textNumbers: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 	const initialize: string[] = ['A/C'];
 	const operator: string[] = ['+', '-', '*', '/', '='];
 	function calculate(n1: string, operator: string, n2: string) {
@@ -90,11 +90,10 @@
 			{nowInput}
 		</p>
 		<!-- <div class="resultValue">{resultVal} </div> -->
-		
+
 		<!-- {operatorOn} {n1} {n2} {inputOperator} -->
 	</div>
 </div>
-
 
 <div class="back_container">
 	{#each initialize as text}
@@ -106,7 +105,7 @@
 				resultVal = '0';
 				n1 = '';
 				n2 = '';
-				inputOperator = ''
+				inputOperator = '';
 				operatorOn = false;
 				nowInput = '';
 			}}
@@ -141,19 +140,19 @@
 				color="orange"
 				onClick={(value) => {
 					if (value == '=') {
-						if(resultVal != '0'){
+						if (resultVal != '0') {
 							resultVal = calculate(resultVal, inputOperator, n2);
 							nowInput = resultVal;
-						}else {
+						} else {
 							resultVal = calculate(n1, inputOperator, n2);
 							nowInput = resultVal;
 						}
-						
-						n2 = ''
-					}else{
-					inputOperator = value;
-					operatorOn = true;
-					nowInput = value;
+
+						n2 = '';
+					} else {
+						inputOperator = value;
+						operatorOn = true;
+						nowInput = value;
 					}
 				}}
 			/>
@@ -179,27 +178,25 @@
 		flex-wrap: nowrap;
 	}
 	.back_container {
-	
 		width: 100%;
 		height: 100%;
 		display: flex;
-	//	justify-content: center;
+		//	justify-content: center;
 		align-content: center;
 	}
-	.result{
+	.result {
 		width: 320px;
 		height: 80px;
 		background-color: aqua;
 		display: flex;
-	flex-direction: center;
-	 justify-content: center;
-	 align-items: center;
-	 font-size: 45px;
+		flex-direction: center;
+		justify-content: center;
+		align-items: center;
+		font-size: 45px;
 	}
-	.resultContainer{
+	.resultContainer {
 		display: flex;
-	flex-direction: center;
-	//justify-content: center;
+		flex-direction: center;
+		//justify-content: center;
 	}
-	
 </style>

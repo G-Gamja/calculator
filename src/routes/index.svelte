@@ -54,7 +54,7 @@
 				{date}
 				<SquareButton
 					onClick={() => {
-						alert({input_text});
+						alert({ input_text });
 						console.log(input_text);
 					}}
 				>
@@ -89,9 +89,10 @@
 			</IconButton>
 		</div>
 	</div>
-	
+	<div class="row_start">
 	<TextButton text="최근" onClick={() => {}} />
 	<TextButton text="추천" onClick={() => {}} />
+	</div>
 	<div class="row_around">
 		<div class="rec_container2">
 			<h4>제목을 입력하세요</h4>
@@ -192,6 +193,16 @@
 		margin-left: 10px;
 		margin-right: 10px;
 		justify-content: space-between;
+		align-items: center;
+	}
+	.row_start {
+		display: flex;
+		flex-direction: row;
+		margin-top: 5px;
+		margin-left: 20px;
+		margin-right: 30px;
+		padding-right: 10px;
+		justify-content: start;
 		align-items: center;
 	}
 	.rec_container {
