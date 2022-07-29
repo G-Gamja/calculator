@@ -48,6 +48,9 @@
 	// 	margin-bottom: 19px;
 	// }
 	.container {
+		//css 변수화
+		$aa : 48px;
+
 		width: 800px;
 		height: 600px;
 		display: grid;

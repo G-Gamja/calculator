@@ -1,0 +1,1 @@
+export {default as SvgRect} from './index.svelte';
