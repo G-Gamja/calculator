@@ -24,8 +24,10 @@
 	let minVal = Math.min(...numbers);
 
 	let titlet: string = 'barchart example';
+	let leftLegend: string = '가격';
+	let rightLegend: string = '년도';
 	let barColor: string = 'pink';
 </script>
-<SvgRect></SvgRect>
+<SvgRect title={titlet} leftLegend={leftLegend}  rightLegend={rightLegend}></SvgRect>
 <style lang="scss">
 </style>
