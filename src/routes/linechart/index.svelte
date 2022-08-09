@@ -12,10 +12,11 @@
 		{ name: '2009', val: 3, color: 'grey' },
 		{ name: '2010', val: 1, color: 'blue' },
 		{ name: '2011', val: 2, color: 'yellow' },
-		{ name: '2012%$', val: 7, color: 'brown' },
+		{ name: '2012', val: 7, color: 'brown' },
 		// { name: 'sat', val: 5, color: 'skyblue' }
 	];
 
+//axios 라이브러리다 겟맵핑 메서드를 쓸 수  있게 해줌
 
 	//get max, min value
 	//질문: ulala에서 val값만 리스트로 뽑아서 쓰고 싶은데 반복문을 통해서 따로 뽑아내는 방법 이외로 무슨 방법이 있을까요?
