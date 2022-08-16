@@ -4,7 +4,7 @@ import { onMount } from 'svelte';
 import { writable } from 'svelte/store';
 
 // 백엔드 참고자료: https://gmlwjd9405.github.io/2018/12/25/difference-dao-dto-entity.html
-
+//ff
 export interface dataModel {
 	denom: string;
 	timestamp: number;
@@ -13,6 +13,10 @@ export interface dataModel {
 	dayVolume: number;
 }
 export let fetchDataList = writable<dataModel[]>([]);
+let sample = new Array;
+let denomSet = new Set();
+ export let denomList = new Array;
+export let coinPriceList = writable<number[]>([]);
 
 //날짜 바꾸기용 콜백함수
 function datechange(date: number){
@@ -24,11 +28,17 @@ export async function getMethod(dateVal: 7|30) {
 			datechange(dateVal)
 		)
 	).data;
-	console.log(data);
+	// console.log(data);
 	const fetchData = _(data.split('\n'))
 		.drop(1)
 		.map((element) => {
 			let afterSplit = element.split(',');
+
+			//set to list 
+			//https://cocoze.tistory.com/86
+			denomSet.add(afterSplit[0]);
+			denomList = [...denomSet];
+		
 			return {
 				denom: afterSplit[0],
 				timestamp: Number(afterSplit[1]),
@@ -38,6 +48,15 @@ export async function getMethod(dateVal: 7|30) {
 			} as dataModel;
 		}).value();
 		fetchDataList.set(fetchData);
+		sample = fetchData
+
+		//set에서 list로 바꾸면서 생기는 문제같은데 왜 생기는지 잘 모르겠음
+		//=> 애초에 데이터 값에 큰따옴표가 포함된거였다
+		// for (let index = 0; index < denomList.length; index++) {
+		// 	 denomList[index] = denomList[index].slice(1,-1);
+		// }
+		console.log(fetchDataList);
+
 	//then으로...
 	// axios
 	// 	.get(urlString)
@@ -48,6 +67,23 @@ export async function getMethod(dateVal: 7|30) {
 	// 		console.log(Error);
 	// 	});
 }
-export function hi() {
-	console.log('hello');
+function isDog(element: string)  {
+	if(element === 'dog')  {
+	  return true;
+	}
+  }
+  
+//filter 함수
+//https://cocobi.tistory.com/123?category=909654
+export function selectCoin(coin: string) {
+	console.log(coin);
+
+	//어레이 아닌거에 필터쓰면 다음과 같은 에러가 발생한다.
+	//https://stackoverflow.com/questions/69016254/typeerror-cannot-read-properties-of-undefined-reading-filter-at-jasmine
+	const coinPriceListf = sample.filter(coina => coina.denom == coin)
+    .map(coina => coina.price)
+	
+	coinPriceList.set(coinPriceListf);
+	console.log(coinPriceList);
+
 }

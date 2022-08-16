@@ -31,7 +31,9 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.35",
+		"@types/d3": "^7.4.0",
 		"axios": "^0.27.2",
+		"d3": "^7.6.1",
 		"lodash": "^4.17.21",
 		"node-sass": "^7.0.1"
 	}
