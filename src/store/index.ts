@@ -23,6 +23,7 @@ function datechange(date: number){
 	return 'https://dashboard-mintscan.s3.ap-northeast-2.amazonaws.com/research/market/'+ date +'.csv' ;
 }
 export async function getMethod(dateVal: 7|30) {
+	//http call
 	const data = (
 		await axios.get(
 			datechange(dateVal)
